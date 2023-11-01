@@ -1,0 +1,1 @@
+[![buddy pipeline](https://eu.buddy.works/pritamdash1997/reconnaissance/pipelines/pipeline/188907/badge.svg?token=af23a265f9111de814a61a0e9a8fa8894c6e8038781a617ffb07e4f3867f608c "buddy pipeline")](https://eu.buddy.works/pritamdash1997/reconnaissance/pipelines/pipeline/188907)
