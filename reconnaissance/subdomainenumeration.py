@@ -1,26 +1,14 @@
-import requests
-import json
+from reconnaissance.subdomainsource.crtsh_source import query_crtsh
+from reconnaissance.subdomainsource.alienvault_source import query_alienvault
+from reconnaissance.subdomainsource.rapiddns_source import query_rapiddns
 
+def enumerate_subdomains(domain, alienvault_api_key=None):
+    crtsh_subdomains = query_crtsh(domain)
+    alienvault_subdomains = set()
+    rapiddns_subdomains = query_rapiddns(domain)
 
-def enumerate_subdomains(domain):
-    try:
-        # Send a request to the CRT.sh API
-        url = f"https://crt.sh/?q=%.{domain}&output=json"
-        response = requests.get(url)
+    if alienvault_api_key:
+        alienvault_subdomains = query_alienvault(domain, alienvault_api_key)
 
-        if response.status_code == 200:
-            # Parse the JSON response
-            data = json.loads(response.text)
-
-            # Extract and format subdomains
-            subdomains = set()
-            for entry in data:
-                subdomains.add(entry['name_value'].strip())
-
-            return subdomains
-        else:
-            print(f"Failed to fetch subdomains for {domain}.")
-            return set()
-    except Exception as e:
-        print(f"An error occurred: {str(e)}")
-        return set()
+    subdomains = crtsh_subdomains.union(alienvault_subdomains).union(rapiddns_subdomains)
+    return subdomains
