@@ -1,3 +1,5 @@
+import os
+
 import requests
 import re
 import yaml
@@ -13,7 +15,7 @@ def get_urls(domain):
             data]  # Add 'https://' if no scheme
     return urls
 
-def scan_url(url, vulnerabilities):
+def scan_url(url, vulnerabilities, results):
     try:
         response = requests.get(url)
         if response.status_code == 200:
@@ -33,27 +35,41 @@ def scan_url(url, vulnerabilities):
                 response2 = requests.get(new_url + pattern)
                 if re.search(matcher, response2.text, re.IGNORECASE):
                     # if re.search(payload, response2.text, re.IGNORECASE):
+                    results.append(url)
                     print(f"Potential XSS detected on {url}: {name}")
+
     except requests.exceptions.RequestException as e:
         print(f"Error scanning {url}: {e}")
 
 def scan_for_xss(urls, vulnerabilities):
+    vulnerable_urls = []
     with tqdm(total=len(urls), unit="URLs", desc="Scanning URLs") as pbar, ThreadPoolExecutor() as executor:
-        futures = [executor.submit(scan_url, url, vulnerabilities) for url in urls]
+        futures = [executor.submit(scan_url, url, vulnerabilities, vulnerable_urls) for url in urls]
         for future in futures:
             future.result()  # Wait for each task to complete
             pbar.update(1)
+
+    return vulnerable_urls
 
 
 def main():
     target_domain = input("Enter the target domain (e.g., example.com): ")
     domain_urls = get_urls(target_domain)
 
+    script_directory = os.path.dirname(os.path.realpath(__file__))
+    config_file_path = os.path.join(script_directory, "configs", "xss_config.yaml")
     # Load the vulnerability patterns from the configuration file
-    with open("configs/xss_config.yaml", "r") as config_file:
+    with open(config_file_path, "r") as config_file:
         vulnerabilities = yaml.safe_load(config_file)
 
-    scan_for_xss(domain_urls, vulnerabilities)
+    vulnerable_urls = scan_for_xss(domain_urls, vulnerabilities)
+
+    # Save vulnerable URLs to a text file
+    with open("vulnerable_xss_urls.txt", "w") as output_file:
+        for url in vulnerable_urls:
+            output_file.write(url + '\n')
+
+    print(f"{len(vulnerable_urls)} vulnerable URLs have been saved to vulnerable_xss_urls.txt")
 
 
 if __name__ == "__main__":
