@@ -1,0 +1,4 @@
+- name: 'XSS'
+  pattern: '<script>alert(XSS)</script>'
+  matcher: 'XSS'
+  payload: '<script>alert("XSS")</script>'

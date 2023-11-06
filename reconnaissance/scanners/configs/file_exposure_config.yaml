@@ -1,0 +1,11 @@
+- name: 'Wordpress user enumeration'
+  pattern: '/wp-json/wp/v2/users/'
+  matcher: 'author'
+
+- name: 'PHP info File disclosure'
+  pattern: '/phpinfo.php'
+  matcher: 'license@php.net'
+
+- name: 'Dotenv file disclosure'
+  pattern: '/.env'
+  matcher: 'APP_URL'
