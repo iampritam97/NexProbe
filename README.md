@@ -3,9 +3,23 @@
 NexProbe is a Python script designed for conducting comprehensive cyber security reconnaissance activities. It offers a combination of active and passive reconnaissance techniques, allowing security professionals to gather essential information about target domains, assess vulnerabilities, and enhance threat intelligence.
 
 [![buddy pipeline](https://eu.buddy.works/pritamdash1997/reconnaissance/pipelines/pipeline/188907/badge.svg?token=af23a265f9111de814a61a0e9a8fa8894c6e8038781a617ffb07e4f3867f608c "buddy pipeline")](https://eu.buddy.works/pritamdash1997/reconnaissance/pipelines/pipeline/188907)
-
 ## Installation
 
+```bash
+git clone https://github.com/iampritam97/NexProbe.git
+```
+
+## Dependencies
+NexProbe depends on multimple python modules. These dependencies can be installed using the requirements file:
+```
+sudo pip install -r requirements.txt
+```
+
+## Usage/Examples
+
+```python
+python recon.py
+```
 
 ## Disclaimer
 NexProbe is intended for ethical and authorized use only. Ensure that you have proper permissions to conduct reconnaissance activities on any target domain.

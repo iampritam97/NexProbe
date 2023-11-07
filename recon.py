@@ -14,7 +14,7 @@ def main():
 ╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚══════╝
                     """)
     while True:
-        print("\nChoose your src method:")
+        print("\nChoose your reconnaissance method:")
         print("1. Active Reconnaissance")
         print("2. Passive Reconnaissance")
         print("3. Exit")
