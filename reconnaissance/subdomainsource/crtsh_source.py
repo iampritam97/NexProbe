@@ -11,8 +11,8 @@ def query_crtsh(domain):
             subdomains = set()
             for entry in data:
                 subdomains.add(entry['name_value'].strip())
-            return subdomains
+            return list(subdomains)
         else:
-            return set()
+            return []
     except Exception as e:
-        return set()
+        return []
