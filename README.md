@@ -6,7 +6,6 @@ NexProbe is a Python script designed for conducting comprehensive cyber security
 
 ## Installation
 
-You can install `crtsh_subdomain_enumerator` using `pip`:
 
 ## Disclaimer
 NexProbe is intended for ethical and authorized use only. Ensure that you have proper permissions to conduct reconnaissance activities on any target domain.
