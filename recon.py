@@ -5,7 +5,7 @@ from src.certificatesource.certanalysis import get_certificate_details_from_main
 from src.emailsources.scraper import get_emails_from_domain
 from src.urlsource.graburls import fetch_urls
 def main():
-    print(r"""\
+    print(r"""
 ███╗   ██╗███████╗██╗  ██╗██████╗ ██████╗  ██████╗ ██████╗ ███████╗
 ████╗  ██║██╔════╝╚██╗██╔╝██╔══██╗██╔══██╗██╔═══██╗██╔══██╗██╔════╝
 ██╔██╗ ██║█████╗   ╚███╔╝ ██████╔╝██████╔╝██║   ██║██████╔╝█████╗  

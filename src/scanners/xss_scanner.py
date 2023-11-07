@@ -67,5 +67,4 @@ def xss(target_domain):
     print(f"{len(vulnerable_urls)} vulnerable URLs have been saved to vulnerable_xss_urls.txt")
 
 
-if __name__ == "__main__":
-    xss()
+

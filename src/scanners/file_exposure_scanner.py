@@ -7,6 +7,7 @@ from tqdm import tqdm  # Import tqdm for progress bar
 with open("configs/file_exposure_config.yaml", "r") as config_file:
     vulnerabilities = yaml.safe_load(config_file)
 
+
 def scan_target(target_domain, vulnerabilities):
     try:
         response = requests.get(f"https://{target_domain}")
@@ -26,9 +27,11 @@ def scan_target(target_domain, vulnerabilities):
     except requests.exceptions.RequestException as e:
         print(f"Error scanning {target_domain}: {e}")
 
+
 def main():
     target_domain = input("Enter the target domain (e.g., example.com): ")
     scan_target(target_domain, vulnerabilities)
+
 
 if __name__ == "__main__":
     main()
