@@ -1,8 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
 import re
-import time
-import random
 from urllib.parse import urljoin
 import threading
 
@@ -27,9 +25,9 @@ def crawl_url(url):
     except requests.exceptions.RequestException as e:
         print(f"Error while crawling link: {url}, {e}")
 
-def crawl_domain(domain_name):
+def crawl_domain(domain):
     try:
-        base_url = f'https://{domain_name}'
+        base_url = f'https://{domain}'
         response = requests.get(base_url)
         response.raise_for_status()
 
@@ -53,15 +51,15 @@ def crawl_domain(domain_name):
             thread.join()
 
     except requests.exceptions.RequestException as e:
-        print(f"Error while crawling domain: {domain_name}, {e}")
+        print(f"Error while crawling domain: {domain}, {e}")
 
-# Get the domain name from the user
-domain_name = input("Enter the domain name to find email : ")
+def get_emails_from_domain(domain):
+    email_list.clear()  # Clear the existing email list
+    crawl_domain(domain)
+    for emails in email_list:
+        print(emails)
+    with open("emails.txt", 'w', encoding='utf-8') as file:
+        for emails in email_list:
+            file.write(emails + '\n')
 
-# Crawl the domain
-crawl_domain(domain_name)
-
-# Print the collected email addresses
-with email_list_lock:
-    for email in email_list:
-        print(email)
+    print(f"Emails have been saved to emails.txt")

@@ -16,6 +16,6 @@ def perform_whois_lookup(domain_name):
                     break
                 response += data
 
-            return response.decode("utf-8")
+            print(response.decode("utf-8"))
     except Exception as e:
         return str(e)

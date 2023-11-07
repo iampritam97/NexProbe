@@ -9,3 +9,7 @@
 - name: 'Dotenv file disclosure'
   pattern: '/.env'
   matcher: 'APP_URL'
+
+- name: 'Wordpress directory Listing'
+  pattern: '/wp-includes/'
+  matcher: 'Index of'

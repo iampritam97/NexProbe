@@ -1,6 +1,3 @@
-from reconnaissance.subdomainenumeration import enumerate_subdomains
-
-
 # domain = "bing.com"
 # subdomains = enumerate_subdomains(domain)
 #
