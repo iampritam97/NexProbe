@@ -1,9 +1,9 @@
-from reconnaissance.WHOISsource.whois_source import perform_whois_lookup
-from reconnaissance.scanners.xss_scanner import xss
-from reconnaissance.subdomainsource.subdomainenumeration import enumerate_subdomains
-from reconnaissance.certificatesource.certanalysis import get_certificate_details_from_main
-from reconnaissance.emailsources.scraper import get_emails_from_domain
-from reconnaissance.urlsource.graburls import fetch_urls
+from src.WHOISsource.whois_source import perform_whois_lookup
+from src.scanners.xss_scanner import xss
+from src.subdomainsource.subdomainenumeration import enumerate_subdomains
+from src.certificatesource.certanalysis import get_certificate_details_from_main
+from src.emailsources.scraper import get_emails_from_domain
+from src.urlsource.graburls import fetch_urls
 def main():
     print(r"""\
 ███╗   ██╗███████╗██╗  ██╗██████╗ ██████╗  ██████╗ ██████╗ ███████╗
@@ -14,7 +14,7 @@ def main():
 ╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚══════╝
                     """)
     while True:
-        print("\nChoose your reconnaissance method:")
+        print("\nChoose your src method:")
         print("1. Active Reconnaissance")
         print("2. Passive Reconnaissance")
         print("3. Exit")

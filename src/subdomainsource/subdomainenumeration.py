@@ -1,4 +1,4 @@
-from reconnaissance.subdomainsource.crtsh_source import query_crtsh
+from src.subdomainsource.crtsh_source import query_crtsh
 from tqdm import tqdm
 
 def enumerate_subdomains(domain):
