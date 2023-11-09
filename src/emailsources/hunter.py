@@ -1,14 +1,18 @@
 import requests
 
+def hunter_fetch_emails(domain):
+    api_key = "61150cc37813ef999eba7556f301b88e98b12061"  # Replace with your actual Hunter.io API key
+    url = f"https://api.hunter.io/v2/domain-search?domain={domain}&api_key={api_key}"
 
-def fetch_emails(domain):
-    url = "https://api.hunter.io/v2/domain-search"
-    headers = {
-        "Authorization": f"Bearer YOUR_HUNTER_API_KEY"
-    }
-    params = {"domain": domain}
-
-    response = requests.get(url, headers=headers, params=params)
+    response = requests.get(url)
     data = response.json() if response.status_code == 200 else {}
 
-    return data.get("data", {}).get("emails", [])
+    emails = data.get("data", {}).get("emails", [])
+
+    # Print the fetched emails
+    for email in emails:
+        print(email.get("value"))
+    with open("emails.txt", 'a', encoding='utf-8') as file:
+        for email in emails:
+            file.write(email.get("value") + '\n')
+    print(f"Emails have been saved to emails.txt")

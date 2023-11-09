@@ -61,5 +61,4 @@ def get_emails_from_domain(domain):
     with open("emails.txt", 'w', encoding='utf-8') as file:
         for emails in email_list:
             file.write(emails + '\n')
-
     print(f"Emails have been saved to emails.txt")

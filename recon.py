@@ -3,6 +3,7 @@ from src.scanners.xss_scanner import xss
 from src.subdomainsource.subdomainenumeration import enumerate_subdomains
 from src.certificatesource.certanalysis import get_certificate_details_from_main
 from src.emailsources.scraper import get_emails_from_domain
+from src.emailsources.hunter import hunter_fetch_emails
 from src.urlsource.graburls import fetch_urls
 def main():
     print(r"""
@@ -24,6 +25,7 @@ def main():
             domain = input("Enter the target domain (e.g., example.com): ")
             xss(domain)
             get_emails_from_domain(domain)
+            hunter_fetch_emails(domain)
 
 
         elif choice == "2":
