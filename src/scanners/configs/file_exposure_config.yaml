@@ -13,3 +13,15 @@
 - name: 'Wordpress directory Listing'
   pattern: '/wp-includes/'
   matcher: 'Index of'
+
+- name: 'npm log file'
+  pattern: '/npm-debug.log'
+  matcher: 'verbose cli'
+
+- name: 'Bitbucket pipelines'
+  pattern: '/bitbucket-pipelines.yml'
+  matcher: 'pipelines:'
+
+- name: '.git folder'
+  pattern: '/.git/'
+  matcher: 'Index of /.git'
