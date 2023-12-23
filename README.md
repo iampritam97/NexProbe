@@ -22,6 +22,15 @@ sudo pip install -r requirements.txt
 python recon.py
 ```
 
+## TODO
+- [ ] SQLi scanner
+- [ ] Internal dashboards and panels scanner
+- [ ] Sensitive tokens and API keys scanner
+- [ ] Response Header Analysis
+- [ ] Data breach detection from external source
+- [ ] Path traversal scanner
+- [ ] Add update flag
+
 ## Disclaimer
 NexProbe is intended for ethical and authorized use only. Ensure that you have proper permissions to conduct reconnaissance activities on any target domain.
 
