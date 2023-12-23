@@ -1,6 +1,6 @@
 import argparse
 import subprocess
-
+from colorama import Fore, Back, Style
 from src.WHOISsource.whois_source import perform_whois_lookup
 from src.scanners.xss_scanner import xss
 from src.subdomainsource.subdomainenumeration import enumerate_subdomains
@@ -33,7 +33,7 @@ def update_tool():
         print(f"Update failed: {e}")
 
 def main():
-    print(r"""
+    print(Fore.GREEN + r"""
      █████╗ ██╗███████╗██╗  ██╗██████╗ ██████╗  ██████╗ ██████╗ ███████╗
      █████╗ ██║██╔════╝╚██╗██╔╝██╔══██╗██╔══██╗██╔═══██╗██╔══██╗██╔════╝
      ██╔██╗ ██║█████╗   ╚███╔╝ ██████╔╝██████╔╝██║   ██║██████╔╝█████╗  
