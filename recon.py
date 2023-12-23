@@ -9,9 +9,9 @@ from src.urlsource.graburls import fetch_urls
 from src.scanners.file_exposure_scanner import file_exposure
 
 def active_reconnaissance(domain):
-    # xss(domain)
-    # get_emails_from_domain(domain)
-    # hunter_fetch_emails(domain)
+    xss(domain)
+    get_emails_from_domain(domain)
+    hunter_fetch_emails(domain)
     file_exposure(domain)
 
 def passive_reconnaissance(domain):
