@@ -1,4 +1,6 @@
 import argparse
+import subprocess
+
 from src.WHOISsource.whois_source import perform_whois_lookup
 from src.scanners.xss_scanner import xss
 from src.subdomainsource.subdomainenumeration import enumerate_subdomains
@@ -20,10 +22,15 @@ def passive_reconnaissance(domain):
     perform_whois_lookup(domain)
     fetch_urls(domain)
 
+
 def update_tool():
-    print("Updating the tool from GitHub...")
-    # Add update logic here
-    print("Update complete.")
+    print("Updating NexProbe.........")
+
+    try:
+        subprocess.run(["git", "pull", "origin", "main"])
+        print("Update successful.")
+    except Exception as e:
+        print(f"Update failed: {e}")
 
 def main():
     print(r"""
