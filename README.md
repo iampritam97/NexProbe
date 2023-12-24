@@ -19,7 +19,7 @@ sudo pip install -r requirements.txt
 ## Usage/Examples
 
 ```python
-python recon.py
+python recon.py --help
 ```
 
 ## TODO
@@ -29,7 +29,8 @@ python recon.py
 - [ ] Response Header Analysis
 - [ ] Data breach detection from external source
 - [ ] Path traversal scanner
-- [ ] Add update flag
+- [x] Add update flag
+- [ ] Directory Fuzzing
 
 ## Disclaimer
 NexProbe is intended for ethical and authorized use only. Ensure that you have proper permissions to conduct reconnaissance activities on any target domain.

@@ -2,6 +2,7 @@ import os
 import requests
 import re
 import yaml
+from colorama import Fore, Back, Style
 from tqdm import tqdm
 from concurrent.futures import ThreadPoolExecutor
 
@@ -36,8 +37,8 @@ def xss(target_domain):
                     if re.search(matcher, response2.text, re.IGNORECASE):
                         # if re.search(payload, response2.text, re.IGNORECASE):
                         results.append(url)
-                        print(f"Potential XSS detected on {url}: {name}")
-
+                        print(Fore.RED + f"Potential XSS detected on {url}: {name}")
+                        print(Style.RESET_ALL)
         except requests.exceptions.RequestException as e:
             print(f"Error scanning {url}: {e}")
 
@@ -64,7 +65,7 @@ def xss(target_domain):
         for url in vulnerable_urls:
             output_file.write(url + '\n')
 
-    print(f"{len(vulnerable_urls)} vulnerable URLs have been saved to vulnerable_xss_urls.txt")
-
+    print(Fore.RED + f"{len(vulnerable_urls)} vulnerable URLs have been saved to vulnerable_xss_urls.txt")
+    print(Style.RESET_ALL)
 
 
