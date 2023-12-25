@@ -1,5 +1,5 @@
 import whois
-from colorama import Fore, Back, Style
+from colorama import Fore, Style
 
 def perform_whois_lookup(domain):
 

@@ -8,12 +8,11 @@ from concurrent.futures import ThreadPoolExecutor
 
 def xss(target_domain):
     def get_urls(domain):
-        # Get all the URLs from archive.org.
         response = requests.get(
             f"https://web.archive.org/cdx/search/cdx?url={domain}/*&output=json&fl=original&collapse=urlkey")
         data = response.json()
         urls = [entry[0] if entry[0].startswith('http') else 'https://' + entry[0] for entry in
-                data]  # Add 'https://' if no scheme
+                data]
         return urls
 
     def scan_url(url, vulnerabilities, results):
@@ -47,7 +46,7 @@ def xss(target_domain):
         with tqdm(total=len(urls), unit="URLs", desc="Scanning URLs") as pbar, ThreadPoolExecutor() as executor:
             futures = [executor.submit(scan_url, url, vulnerabilities, vulnerable_urls) for url in urls]
             for future in futures:
-                future.result()  # Wait for each task to complete
+                future.result()
                 pbar.update(1)
 
         return vulnerable_urls
@@ -55,12 +54,10 @@ def xss(target_domain):
 
     script_directory = os.path.dirname(os.path.realpath(__file__))
     config_file_path = os.path.join(script_directory, "configs", "xss_config.yaml")
-    # Load the vulnerability patterns from the configuration file
     with open(config_file_path, "r") as config_file:
         vulnerabilities = yaml.safe_load(config_file)
 
     vulnerable_urls = scan_for_xss(domain_urls, vulnerabilities)
-    # Save vulnerable URLs to a text file
     with open("vulnerable_xss_urls.txt", "w") as output_file:
         for url in vulnerable_urls:
             output_file.write(url + '\n')

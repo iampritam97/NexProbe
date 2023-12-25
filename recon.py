@@ -1,6 +1,6 @@
 import argparse
 import subprocess
-from colorama import Fore, Back, Style
+from colorama import Fore
 from src.WHOISsource.whois_source import perform_whois_lookup
 from src.scanners.xss_scanner import xss
 from src.subdomainsource.subdomainenumeration import enumerate_subdomains
@@ -9,8 +9,11 @@ from src.emailsources.scraper import get_emails_from_domain
 from src.emailsources.hunter import hunter_fetch_emails
 from src.urlsource.graburls import fetch_urls
 from src.scanners.file_exposure_scanner import file_exposure
+from src.scanners.HeaderAnalyse import scan_headers
+
 
 def active_reconnaissance(domain):
+    scan_headers(domain)
     xss(domain)
     get_emails_from_domain(domain)
     hunter_fetch_emails(domain)

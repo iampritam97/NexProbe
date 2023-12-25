@@ -17,7 +17,6 @@ def query_alienvault_otx(indicator, section="malware"):
         if response.status_code == 200:
             data = response.json()
             print(data)
-            # Print the formatted threat intelligence data
             print("Threat Intelligence Data:")
             for entry in data.get("data", []):
                 print(f"Datetime Int: {entry.get('datetime_int', 'N/A')}")

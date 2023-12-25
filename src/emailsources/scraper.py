@@ -3,8 +3,8 @@ from bs4 import BeautifulSoup
 import re
 from urllib.parse import urljoin
 import threading
+from colorama import Fore,Style
 
-# Create a lock to synchronize access to shared data (email list)
 email_list_lock = threading.Lock()
 email_list = []
 
@@ -15,10 +15,8 @@ def crawl_url(url):
 
         soup = BeautifulSoup(response.text, 'html.parser')
 
-        # Find all the email addresses on the page
         emails = re.findall(r'[\w\.-]+@[\w\.-]+', soup.text)
 
-        # Add found emails to the shared email list
         with email_list_lock:
             email_list.extend(emails)
 
@@ -46,7 +44,6 @@ def crawl_domain(domain):
                 thread_list.append(thread)
                 thread.start()
 
-        # Wait for all threads to finish
         for thread in thread_list:
             thread.join()
 
@@ -54,11 +51,12 @@ def crawl_domain(domain):
         print(f"Error while crawling domain: {domain}, {e}")
 
 def get_emails_from_domain(domain):
-    email_list.clear()  # Clear the existing email list
+    email_list.clear()
     crawl_domain(domain)
     for emails in email_list:
-        print(emails)
+        print(Fore.RED + emails)
     with open("emails.txt", 'w', encoding='utf-8') as file:
         for emails in email_list:
             file.write(emails + '\n')
     print(f"Emails have been saved to emails.txt")
+    print(Style.RESET_ALL)

@@ -1,7 +1,7 @@
 import requests
 
 def hunter_fetch_emails(domain):
-    api_key = "61150cc37813ef999eba7556f301b88e98b12061"  # Replace with your actual Hunter.io API key
+    api_key = "61150cc37813ef999eba7556f301b88e98b12061"
     url = f"https://api.hunter.io/v2/domain-search?domain={domain}&api_key={api_key}"
 
     response = requests.get(url)
@@ -9,7 +9,6 @@ def hunter_fetch_emails(domain):
 
     emails = data.get("data", {}).get("emails", [])
 
-    # Print the fetched emails
     for email in emails:
         print(email.get("value"))
     with open("emails.txt", 'a', encoding='utf-8') as file:

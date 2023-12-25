@@ -31,6 +31,7 @@ python recon.py --help
 - [ ] Path traversal scanner
 - [x] Add update flag
 - [ ] Directory Fuzzing
+- [ ] Port scanner
 
 ## Disclaimer
 NexProbe is intended for ethical and authorized use only. Ensure that you have proper permissions to conduct reconnaissance activities on any target domain.
