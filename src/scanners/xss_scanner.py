@@ -2,9 +2,13 @@ import os
 import requests
 import re
 import yaml
-from colorama import Fore, Back, Style
+from colorama import Fore, Style
 from tqdm import tqdm
 from concurrent.futures import ThreadPoolExecutor
+from reportlab.lib.pagesizes import letter
+from reportlab.platypus import SimpleDocTemplate, Paragraph
+from reportlab.lib.styles import getSampleStyleSheet
+
 
 def xss(target_domain):
     def get_urls(domain):
@@ -23,7 +27,7 @@ def xss(target_domain):
                     name = vuln["name"]
                     pattern = vuln["pattern"]
                     matcher = vuln["matcher"]
-                    payload = vuln.get("payload", "")  # Get the payload field or an empty string if not provided
+                    payload = vuln.get("payload", "")
                     # payload_matcher = vuln.get("payload_matcher", None)
                     #
                     # if payload_matcher and re.search(payload_matcher, response.text, re.IGNORECASE):
@@ -50,6 +54,29 @@ def xss(target_domain):
                 pbar.update(1)
 
         return vulnerable_urls
+
+    def create_pdf(vulnerable_urls, domain):
+        output_directory = 'output'
+        output_pdf_file = os.path.join(output_directory, 'XSS_Scan_Report.pdf')
+
+        output_dir = os.path.dirname(output_pdf_file)
+        if not os.path.exists(output_dir):
+            os.makedirs(output_dir)
+
+        doc = SimpleDocTemplate(output_pdf_file, pagesize=letter)
+        styles = getSampleStyleSheet()
+
+        story = []
+        title = Paragraph(f"<b>XSS Scan for {domain}</b>", styles['Title'])
+        story.append(title)
+        story.append(Paragraph("<b>Vulnerable URLs:</b>", styles['Normal']))
+        for url in vulnerable_urls:
+            story.append(Paragraph(url, styles['Normal']))
+
+        doc.build(story)
+
+        print(Fore.RED + f"PDF report with vulnerable URLs saved to: {output_pdf_file}" + Style.RESET_ALL)
+
     domain_urls = get_urls(target_domain)
 
     script_directory = os.path.dirname(os.path.realpath(__file__))
@@ -58,11 +85,4 @@ def xss(target_domain):
         vulnerabilities = yaml.safe_load(config_file)
 
     vulnerable_urls = scan_for_xss(domain_urls, vulnerabilities)
-    with open("vulnerable_xss_urls.txt", "w") as output_file:
-        for url in vulnerable_urls:
-            output_file.write(url + '\n')
-
-    print(Fore.RED + f"{len(vulnerable_urls)} vulnerable URLs have been saved to vulnerable_xss_urls.txt")
-    print(Style.RESET_ALL)
-
-
+    create_pdf(vulnerable_urls, target_domain)

@@ -1,10 +1,14 @@
+import os
 from src.subdomainsource.crtsh_source import query_crtsh
 from tqdm import tqdm
+from reportlab.lib.pagesizes import letter
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
+from reportlab.lib.styles import getSampleStyleSheet
+
 
 def enumerate_subdomains(domain):
     crtsh_subdomains = query_crtsh(domain)
 
-    # Use tqdm to create a progress bar
     with tqdm(total=len(crtsh_subdomains), unit="Subdomains", desc=f"Enumerating Subdomains for {domain}") as pbar:
         crtsh_subdomains_set = set(crtsh_subdomains)
 
@@ -13,18 +17,38 @@ def enumerate_subdomains(domain):
         subdomains = list(subdomains_set)
 
         for subdomain in subdomains:
-            pbar.update(1)  # Update the progress bar
+            pbar.update(1)
 
         if subdomains:
             print(f"Subdomains for {domain}:")
             for subdomain in subdomains:
                 print(subdomain)
-            # Write subdomains to the specified output file
-            with open("subdomains.txt", 'w', encoding='utf-8') as file:
-                for subdomain in subdomains:
-                        file.write(subdomain + '\n')
 
-            print(f"Subdomains have been saved to subdomains.txt")
+            create_pdf(subdomains, "Subdomains_Report.pdf", domain)
+
+            print(f"Subdomains and PDF report have been generated.")
         else:
             print(f"No subdomains found for {domain}.")
+
     return subdomains
+
+
+def create_pdf(subdomains, output_file, domain):
+    output_directory = 'output'
+    output_pdf_file = os.path.join(output_directory, output_file)
+
+    if not os.path.exists(output_directory):
+        os.makedirs(output_directory)
+
+    pdf = SimpleDocTemplate(output_pdf_file, pagesize=letter)
+    story = []
+
+    styles = getSampleStyleSheet()
+    story.append(Paragraph("Subdomains Report", styles['Title']))
+    story.append(Paragraph(f"Domain: {domain}", styles['Normal']))
+    story.append(Spacer(1, 12))
+
+    for subdomain in subdomains:
+        story.append(Paragraph(f"Subdomain: {subdomain}", styles['Normal']))
+
+    pdf.build(story)

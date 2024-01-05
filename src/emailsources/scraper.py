@@ -1,9 +1,14 @@
+import os
+
 import requests
 from bs4 import BeautifulSoup
 import re
 from urllib.parse import urljoin
 import threading
-from colorama import Fore,Style
+from reportlab.lib.pagesizes import letter
+from reportlab.platypus import SimpleDocTemplate, Paragraph
+from reportlab.lib.styles import getSampleStyleSheet
+from colorama import Fore, Style
 
 email_list_lock = threading.Lock()
 email_list = []
@@ -50,13 +55,39 @@ def crawl_domain(domain):
     except requests.exceptions.RequestException as e:
         print(f"Error while crawling domain: {domain}, {e}")
 
-def get_emails_from_domain(domain):
+def create_pdf(emails):
+    output_directory = 'output'
+    output_pdf_file = os.path.join(output_directory, 'Email_Report_Crawl.pdf')
+
+    # Check if the output directory exists and create it if not
+    output_dir = os.path.dirname(output_pdf_file)
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+
+    doc = SimpleDocTemplate(output_pdf_file, pagesize=letter)
+    styles = getSampleStyleSheet()
+
+    # Story to hold the content
+    story = []
+    title = Paragraph(f"<b>Fetched Emails - Crawler</b>", styles['Title'])
+    story.append(title)
+    for email in emails:
+        story.append(Paragraph(f"<b>Email:</b> {email}", styles['Normal']))
+
+    doc.build(story)
+
+    print(f"PDF report with emails saved to: {output_pdf_file}")
+
+def get_emails_crawl(domain):
     email_list.clear()
     crawl_domain(domain)
-    for emails in email_list:
-        print(Fore.RED + emails)
-    with open("emails.txt", 'w', encoding='utf-8') as file:
-        for emails in email_list:
-            file.write(emails + '\n')
-    print(f"Emails have been saved to emails.txt")
+
+    # Print emails to the terminal
+    for email in email_list:
+        print(Fore.RED + email)
+
+    # Save emails to PDF
+    create_pdf(email_list)
+
     print(Style.RESET_ALL)
+

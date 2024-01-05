@@ -1,6 +1,12 @@
+import os
+
 import requests
-from colorama import Fore, Style
 from tqdm import tqdm
+from reportlab.lib.pagesizes import letter
+from reportlab.platypus import SimpleDocTemplate, Paragraph
+from reportlab.lib.styles import getSampleStyleSheet
+from colorama import Fore, Style
+
 
 def scan_headers(target_domain):
     try:
@@ -14,7 +20,9 @@ def scan_headers(target_domain):
 
         if response.status_code == 200:
             print(f"Scanning {url}")
-            required_headers = {"strict-transport-security", "content-security-policy", "x-frame-options", "x-content-type-options", "referrer-policy", "X-XSS-Protection", "Public-Key-Pins", "Expect-CT"}
+            required_headers = {"strict-transport-security", "content-security-policy", "x-frame-options",
+                                "x-content-type-options", "referrer-policy", "X-XSS-Protection", "Public-Key-Pins",
+                                "Expect-CT"}
             actual_headers = set(header.lower() for header in response.headers.keys())
             missing_headers = required_headers - actual_headers
 
@@ -25,6 +33,9 @@ def scan_headers(target_domain):
                 print(Fore.RED + f"All required security headers present on {url}")
                 print(Style.RESET_ALL)
 
+            # Save header scan results to PDF
+            create_pdf(missing_headers, target_domain)
+
             with tqdm(total=len(required_headers), desc="Scanning headers") as pbar:
                 for vuln in required_headers:
                     pbar.update(1)
@@ -32,3 +43,28 @@ def scan_headers(target_domain):
     except requests.exceptions.RequestException as e:
         print(f"Error scanning {target_domain}: {e}")
 
+
+def create_pdf(missing_headers, target_domain):
+    output_directory = 'output'
+    output_pdf_file = os.path.join(output_directory, 'Header_Scan_Report.pdf')
+
+    output_dir = os.path.dirname(output_pdf_file)
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+
+    doc = SimpleDocTemplate(output_pdf_file, pagesize=letter)
+    styles = getSampleStyleSheet()
+
+    # Story to hold the content
+    story = []
+    title = Paragraph(f"<b>Header Analysis for {target_domain}</b>", styles['Title'])
+    story.append(title)
+
+    # Add missing headers to the story using ReportLab's Paragraph class
+    for header in missing_headers:
+        story.append(Paragraph(f"<b>Missing Header:</b> {header}", styles['Normal']))
+
+    # Build the PDF document
+    doc.build(story)
+
+    print(f"Report for header analysis saved to: {output_pdf_file}")

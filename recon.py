@@ -1,29 +1,41 @@
 import argparse
 import subprocess
-from colorama import Fore
+from colorama import Fore,Style
 from src.WHOISsource.whois_source import perform_whois_lookup
 from src.scanners.xss_scanner import xss
 from src.subdomainsource.subdomainenumeration import enumerate_subdomains
-from src.certificatesource.certanalysis import get_certificate_details_from_main
-from src.emailsources.scraper import get_emails_from_domain
+from src.certificatesource.certanalysis import get_certificate_details
+from src.emailsources.scraper import get_emails_crawl
 from src.emailsources.hunter import hunter_fetch_emails
 from src.urlsource.graburls import fetch_urls
 from src.scanners.file_exposure_scanner import file_exposure
 from src.scanners.HeaderAnalyse import scan_headers
-
-
+from src.scanners.tech_detect import detect_techstack
+from src.scanners.portscanner import portscan_main
+from src.threatintelsource.threatintel import query_alienvault_otx
+from src.threatintelsource.URLhaus import query_urlhaus
+from src.threatintelsource.virustotal import virustotal_domain_report
+from src.threatintelsource.pulsedive import pulsedive_main
 def active_reconnaissance(domain):
-    scan_headers(domain)
-    xss(domain)
-    get_emails_from_domain(domain)
-    hunter_fetch_emails(domain)
-    file_exposure(domain)
+    print(f"*********************Scanning for {domain}**********************"+Style.RESET_ALL)
+    # scan_headers(domain)
+    # xss(domain)
+    # get_emails_crawl(domain)
+    # hunter_fetch_emails(domain)
+    # file_exposure(domain)
+    # detect_techstack(domain)
+    # portscan_main(domain)
 
 def passive_reconnaissance(domain):
-    enumerate_subdomains(domain)
-    get_certificate_details_from_main(domain)
-    perform_whois_lookup(domain)
-    fetch_urls(domain)
+    print(f"*********************Scanning for {domain}**********************"+Style.RESET_ALL)
+    # enumerate_subdomains(domain)
+    # get_certificate_details(domain)
+    # perform_whois_lookup(domain)
+    # fetch_urls(domain)
+    # query_alienvault_otx(domain)
+    # query_urlhaus(domain)
+    # virustotal_domain_report(domain)
+    # pulsedive_main(domain)
 
 
 def update_tool():
