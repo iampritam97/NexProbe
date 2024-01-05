@@ -33,7 +33,6 @@ def scan_headers(target_domain):
                 print(Fore.RED + f"All required security headers present on {url}")
                 print(Style.RESET_ALL)
 
-            # Save header scan results to PDF
             create_pdf(missing_headers, target_domain)
 
             with tqdm(total=len(required_headers), desc="Scanning headers") as pbar:
@@ -55,16 +54,13 @@ def create_pdf(missing_headers, target_domain):
     doc = SimpleDocTemplate(output_pdf_file, pagesize=letter)
     styles = getSampleStyleSheet()
 
-    # Story to hold the content
     story = []
     title = Paragraph(f"<b>Header Analysis for {target_domain}</b>", styles['Title'])
     story.append(title)
 
-    # Add missing headers to the story using ReportLab's Paragraph class
     for header in missing_headers:
         story.append(Paragraph(f"<b>Missing Header:</b> {header}", styles['Normal']))
 
-    # Build the PDF document
     doc.build(story)
 
     print(f"Report for header analysis saved to: {output_pdf_file}")

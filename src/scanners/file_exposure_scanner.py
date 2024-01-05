@@ -13,6 +13,7 @@ config_file_path = os.path.join(script_directory, "configs", "file_exposure_conf
 with open(config_file_path, "r") as config_file:
     vulnerabilities = yaml.safe_load(config_file)
 
+
 def file_exposure(target_domain):
     exposed_files = []
 
@@ -31,10 +32,10 @@ def file_exposure(target_domain):
                         print(Style.RESET_ALL)
                     pbar.update(1)
 
-            # Save exposed files to PDF
             create_pdf(exposed_files, target_domain)
     except requests.exceptions.RequestException as e:
         print(f"Error scanning {target_domain}: {e}")
+
 
 def create_pdf(exposed_files, target_domain):
     output_directory = 'output'
@@ -47,11 +48,9 @@ def create_pdf(exposed_files, target_domain):
     doc = SimpleDocTemplate(output_pdf_file, pagesize=letter)
     styles = getSampleStyleSheet()
 
-    # Story to hold the content
     story = []
     title = Paragraph(f"<b>File Exposures for {target_domain}</b>", styles['Title'])
     story.append(title)
-    # Add each exposed file to the story using ReportLab's Paragraph class
     for exposed_file in exposed_files:
         story.append(Paragraph(f"<b>Exposed File:</b> {exposed_file}", styles['Normal']))
 

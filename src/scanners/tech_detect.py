@@ -17,7 +17,7 @@ def detect_techstack(domain):
 
     try:
         response = requests.get(base_url, params=params)
-        response.raise_for_status()  # Raise an exception for HTTP errors
+        response.raise_for_status()
 
         data = response.json()
 
@@ -33,7 +33,6 @@ def detect_techstack(domain):
             if name:
                 print(Fore.RED + f" - {name}")
 
-        # Save technology stack results to PDF
         create_pdf(results, domain)
 
     else:
@@ -52,17 +51,14 @@ def create_pdf(results, domain):
     doc = SimpleDocTemplate(output_pdf_file, pagesize=letter)
     styles = getSampleStyleSheet()
 
-    # Story to hold the content
     story = []
     title = Paragraph(f"<b>TechStack Report for {domain}</b>", styles['Title'])
     story.append(title)
-    # Add technology stack results to the story using ReportLab's Paragraph class
     for result in results:
         name = result.get("name")
         if name:
             story.append(Paragraph(f"<b>Technology Used:</b> {name}", styles['Normal']))
 
-    # Build the PDF document
     doc.build(story)
 
     print(f"PDF report with technology stack saved to: {output_pdf_file}")

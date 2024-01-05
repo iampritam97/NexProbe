@@ -5,6 +5,7 @@ from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
 from reportlab.lib.styles import getSampleStyleSheet
 
+
 def pulsedive_domain_info(api_key, pretty, probe, domain):
     base_url = "https://pulsedive.com/api/analyze.php"
     endpoint = f"value={domain}"
@@ -33,6 +34,7 @@ def pulsedive_domain_info(api_key, pretty, probe, domain):
         print(f"Error fetching information for {domain}: {e}")
         return None
 
+
 def get_info_by_qid(api_key, pretty, qid):
     base_url = "https://pulsedive.com/api/analyze.php"
     params = {
@@ -52,6 +54,7 @@ def get_info_by_qid(api_key, pretty, qid):
     except requests.exceptions.RequestException as e:
         print(f"Error fetching information for QID {qid}: {e}")
         return None
+
 
 def create_pdf(domain, info_by_qid, output_file, api_key, qid):
     output_directory = 'output'
@@ -88,6 +91,7 @@ def create_pdf(domain, info_by_qid, output_file, api_key, qid):
 
     pdf.build(story)
 
+
 def pulsedive_main(domain):
     api_key = '1556048602b2c4dfa51c1913685655a8715d21dbd8a5703d3852aacfc4ba16e5'
     pretty = '1'
@@ -105,4 +109,3 @@ def pulsedive_main(domain):
         print(f"Pulsedive information and PDF report have been generated.")
     else:
         print("Failed to retrieve QID. Exiting.")
-

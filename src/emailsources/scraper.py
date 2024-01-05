@@ -13,6 +13,7 @@ from colorama import Fore, Style
 email_list_lock = threading.Lock()
 email_list = []
 
+
 def crawl_url(url):
     try:
         response = requests.get(url)
@@ -27,6 +28,7 @@ def crawl_url(url):
 
     except requests.exceptions.RequestException as e:
         print(f"Error while crawling link: {url}, {e}")
+
 
 def crawl_domain(domain):
     try:
@@ -55,11 +57,11 @@ def crawl_domain(domain):
     except requests.exceptions.RequestException as e:
         print(f"Error while crawling domain: {domain}, {e}")
 
+
 def create_pdf(emails):
     output_directory = 'output'
     output_pdf_file = os.path.join(output_directory, 'Email_Report_Crawl.pdf')
 
-    # Check if the output directory exists and create it if not
     output_dir = os.path.dirname(output_pdf_file)
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
@@ -67,7 +69,6 @@ def create_pdf(emails):
     doc = SimpleDocTemplate(output_pdf_file, pagesize=letter)
     styles = getSampleStyleSheet()
 
-    # Story to hold the content
     story = []
     title = Paragraph(f"<b>Fetched Emails - Crawler</b>", styles['Title'])
     story.append(title)
@@ -78,16 +79,14 @@ def create_pdf(emails):
 
     print(f"PDF report with emails saved to: {output_pdf_file}")
 
+
 def get_emails_crawl(domain):
     email_list.clear()
     crawl_domain(domain)
 
-    # Print emails to the terminal
     for email in email_list:
         print(Fore.RED + email)
 
-    # Save emails to PDF
     create_pdf(email_list)
 
     print(Style.RESET_ALL)
-

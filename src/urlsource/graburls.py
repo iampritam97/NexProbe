@@ -1,18 +1,20 @@
 import os
 import requests
-from colorama import Fore, Style
-from tqdm import tqdm
+from colorama import Style
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
 from reportlab.lib.styles import getSampleStyleSheet
 
+
 def get_urls(domain):
-    response = requests.get(f"https://web.archive.org/cdx/search/cdx?url={domain}/*&output=json&fl=original&collapse=urlkey")
+    response = requests.get(
+        f"https://web.archive.org/cdx/search/cdx?url={domain}/*&output=json&fl=original&collapse=urlkey")
     data = response.json()
 
     urls = [entry[0] for entry in data]
 
     return urls
+
 
 def fetch_urls(domain):
     urls = get_urls(domain)
@@ -21,6 +23,7 @@ def fetch_urls(domain):
 
     print(f"URLs and PDF report have been generated.")
     print(Style.RESET_ALL)
+
 
 def create_pdf(urls, output_file, domain):
     output_directory = 'output'
@@ -41,4 +44,3 @@ def create_pdf(urls, output_file, domain):
         story.append(Paragraph(f"URL: {url}", styles['Normal']))
 
     pdf.build(story)
-

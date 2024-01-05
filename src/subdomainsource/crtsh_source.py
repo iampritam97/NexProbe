@@ -1,6 +1,7 @@
 import requests
 import json
 
+
 def query_crtsh(domain):
     try:
         url = f"https://crt.sh/?q=%.{domain}&output=json"

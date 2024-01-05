@@ -1,6 +1,6 @@
 import argparse
 import subprocess
-from colorama import Fore,Style
+from colorama import Fore, Style
 from src.WHOISsource.whois_source import perform_whois_lookup
 from src.scanners.xss_scanner import xss
 from src.subdomainsource.subdomainenumeration import enumerate_subdomains
@@ -16,26 +16,29 @@ from src.threatintelsource.threatintel import query_alienvault_otx
 from src.threatintelsource.URLhaus import query_urlhaus
 from src.threatintelsource.virustotal import virustotal_domain_report
 from src.threatintelsource.pulsedive import pulsedive_main
+
+
 def active_reconnaissance(domain):
-    print(f"*********************Scanning for {domain}**********************"+Style.RESET_ALL)
-    # scan_headers(domain)
-    # xss(domain)
-    # get_emails_crawl(domain)
-    # hunter_fetch_emails(domain)
-    # file_exposure(domain)
-    # detect_techstack(domain)
-    # portscan_main(domain)
+    print(f"*********************Scanning for {domain}**********************" + Style.RESET_ALL)
+    scan_headers(domain)
+    xss(domain)
+    get_emails_crawl(domain)
+    hunter_fetch_emails(domain)
+    file_exposure(domain)
+    detect_techstack(domain)
+    portscan_main(domain)
+
 
 def passive_reconnaissance(domain):
-    print(f"*********************Scanning for {domain}**********************"+Style.RESET_ALL)
-    # enumerate_subdomains(domain)
-    # get_certificate_details(domain)
-    # perform_whois_lookup(domain)
-    # fetch_urls(domain)
-    # query_alienvault_otx(domain)
-    # query_urlhaus(domain)
-    # virustotal_domain_report(domain)
-    # pulsedive_main(domain)
+    print(f"*********************Scanning for {domain}**********************" + Style.RESET_ALL)
+    enumerate_subdomains(domain)
+    get_certificate_details(domain)
+    perform_whois_lookup(domain)
+    fetch_urls(domain)
+    query_alienvault_otx(domain)
+    query_urlhaus(domain)
+    virustotal_domain_report(domain)
+    pulsedive_main(domain)
 
 
 def update_tool():
@@ -46,6 +49,7 @@ def update_tool():
         print("Update successful.")
     except Exception as e:
         print(f"Update failed: {e}")
+
 
 def main():
     print(Fore.CYAN + r"""
@@ -76,6 +80,7 @@ def main():
             active_reconnaissance(domain)
         else:
             print("Please specify either passive (-p) or active (-a) reconnaissance.")
+
 
 if __name__ == "__main__":
     main()

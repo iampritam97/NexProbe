@@ -25,7 +25,6 @@ def perform_whois_lookup(domain):
         print("Registrant Country:", whois_info.country)
         print(Style.RESET_ALL)
 
-        # Save WHOIS information to PDF
         create_whois_pdf(whois_info, domain)
 
     except Exception as e:
