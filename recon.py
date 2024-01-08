@@ -1,5 +1,6 @@
 import argparse
 import subprocess
+import time
 from colorama import Fore, Style
 from src.WHOISsource.whois_source import perform_whois_lookup
 from src.scanners.xss_scanner import xss
@@ -19,6 +20,7 @@ from src.threatintelsource.pulsedive import pulsedive_main
 
 
 def active_reconnaissance(domain):
+    start_time = time.time()
     print(f"*********************Scanning for {domain}**********************" + Style.RESET_ALL)
     scan_headers(domain)
     xss(domain)
@@ -27,9 +29,12 @@ def active_reconnaissance(domain):
     file_exposure(domain)
     detect_techstack(domain)
     portscan_main(domain)
+    end_time = time.time()
+    print(f"Active Reconnaissance took {end_time - start_time:.2f} seconds.")
 
 
 def passive_reconnaissance(domain):
+    start_time = time.time()
     print(f"*********************Scanning for {domain}**********************" + Style.RESET_ALL)
     enumerate_subdomains(domain)
     get_certificate_details(domain)
@@ -39,6 +44,8 @@ def passive_reconnaissance(domain):
     query_urlhaus(domain)
     virustotal_domain_report(domain)
     pulsedive_main(domain)
+    end_time = time.time()
+    print(f"Passive Reconnaissance took {end_time - start_time:.2f} seconds.")
 
 
 def update_tool():
