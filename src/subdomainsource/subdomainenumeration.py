@@ -1,6 +1,5 @@
 import os
 from src.subdomainsource.crtsh_source import query_crtsh
-from tqdm import tqdm
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
 from reportlab.lib.styles import getSampleStyleSheet
@@ -9,26 +8,22 @@ from colorama import Fore, Style
 def enumerate_subdomains(domain):
     crtsh_subdomains = query_crtsh(domain)
 
-    with tqdm(total=len(crtsh_subdomains), unit="Subdomains", desc=f"Enumerating Subdomains for {domain}") as pbar:
-        crtsh_subdomains_set = set(crtsh_subdomains)
+    crtsh_subdomains_set = set(crtsh_subdomains)
 
-        subdomains_set = crtsh_subdomains_set
+    subdomains_set = crtsh_subdomains_set
 
-        subdomains = list(subdomains_set)
+    subdomains = list(subdomains_set)
 
+    if subdomains:
+        print(Fore.GREEN + f"Subdomains for {domain}:")
         for subdomain in subdomains:
-            pbar.update(1)
+            print(subdomain)
+        Style.RESET_ALL
+        create_pdf(subdomains, "Subdomains_Report.pdf", domain)
 
-        if subdomains:
-            print(Fore.GREEN + f"Subdomains for {domain}:")
-            for subdomain in subdomains:
-                print(subdomain)
-            Style.RESET_ALL
-            create_pdf(subdomains, "Subdomains_Report.pdf", domain)
-
-            print(Fore.GREEN + f"Subdomains and PDF report have been generated." + Style.RESET_ALL)
-        else:
-            print(f"No subdomains found for {domain}.")
+        print(Fore.RED + f"Subdomains and PDF report have been saved to output folder." + Style.RESET_ALL)
+    else:
+        print(f"No subdomains found for {domain}.")
 
     return subdomains
 
