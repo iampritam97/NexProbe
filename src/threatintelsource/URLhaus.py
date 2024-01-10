@@ -3,7 +3,7 @@ import requests
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Paragraph
 from reportlab.lib.styles import getSampleStyleSheet
-
+from colorama import Fore,Style
 
 def query_urlhaus(url):
     data = {'host': url}
@@ -28,14 +28,14 @@ def query_urlhaus(url):
     story.append(Paragraph(f"<b>Query Status:</b> {json_response['query_status']}", styles['Normal']))
 
     if json_response['query_status'] == 'ok':
-        print(f"URLhaus Query Result for {url} :")
+        print(Fore.GREEN + f"URLhaus Query Result for {url} :")
         for results in json_response['urls']:
             print(f"URL: {results['url']}")
             print(f"Tags: {results['tags']}")
             print(f"Threat: {results['threat']}")
             print(f"Date Added: {results['date_added']}")
             print(f"Current Status: {results['url_status']}")
-
+        Style.RESET_ALL
         for result in json_response['urls']:
             story.append(Paragraph(f"<b>URL:</b> {result['url']}", styles['Normal']))
             story.append(Paragraph(f"<b>Tags:</b> {', '.join(result['tags'])}", styles['Normal']))
@@ -46,4 +46,4 @@ def query_urlhaus(url):
 
     doc.build(story)
 
-    print(f"Report saved to: {output_pdf_file}")
+    print(Fore.RED + f"URLhaus Report saved to: {output_pdf_file}" + Style.RESET_ALL)

@@ -13,7 +13,7 @@ def port_scan(host, port):
             result = sock.connect_ex((host, port))
 
             if result == 0:
-                print(Fore.RED + f"Port {port} on {host} is open" + Style.RESET_ALL)
+                print(Fore.GREEN + f"Port {port} on {host} is open" + Style.RESET_ALL)
                 return True
             else:
                 print(f"Port {port} on {host} is closed")
@@ -31,12 +31,12 @@ def multi_port_scan(host, ports):
 
 def portscan_main(domain):
     predefined_ports = [20, 21, 22, 23, 25, 53, 137, 139, 445, 80, 443, 8080, 8443, 1433, 1434, 3306,
-                        3389]
+                        3389, 5888]
 
     open_ports = multi_port_scan(domain, predefined_ports)
 
     if open_ports:
-        print(Fore.RED + f"Open ports on {domain}: {open_ports}" + Style.RESET_ALL)
+        print(Fore.GREEN + f"Open ports on {domain}: {open_ports}" + Style.RESET_ALL)
 
         create_pdf(open_ports, domain)
 
@@ -62,4 +62,4 @@ def create_pdf(open_ports, domain):
 
     doc.build(story)
 
-    print(f"PDF report with open ports saved to: {output_pdf_file}")
+    print(Fore.RED + f"PDF report with open ports saved to: {output_pdf_file}" + Style.RESET_ALL)

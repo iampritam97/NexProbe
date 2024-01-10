@@ -3,6 +3,7 @@ import requests
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Paragraph
 from reportlab.lib.styles import getSampleStyleSheet
+from colorama import Fore, Style
 
 OTX_API_KEY = "81332555b6860a7b0ef047757fa704037517158e7dedca1494a676866f0d1cfd"
 
@@ -10,7 +11,7 @@ OTX_API_URL = "https://otx.alienvault.com/api/v1/indicators/domain/{indicator}/{
 
 
 def print_and_save_to_pdf(output_text, output_pdf_file):
-    print(output_text)
+    print(Fore.GREEN + output_text + Style.RESET_ALL)
 
     doc = SimpleDocTemplate(output_pdf_file, pagesize=letter)
     styles = getSampleStyleSheet()
@@ -24,7 +25,7 @@ def print_and_save_to_pdf(output_text, output_pdf_file):
 
     doc.build(story)
 
-    print(f"Threat intelligence report saved to: {output_pdf_file}")
+    print(Fore.RED + f"AlienVault OTX Threat intelligence report saved to: {output_pdf_file}" + Style.RESET_ALL)
 
 
 def query_alienvault_otx(indicator, section="url_list"):

@@ -40,7 +40,7 @@ def xss(target_domain):
                     if re.search(matcher, response2.text, re.IGNORECASE):
                         # if re.search(payload, response2.text, re.IGNORECASE):
                         results.append(url)
-                        print(Fore.RED + f"Potential XSS detected on {url}: {name}")
+                        print(Fore.GREEN + f"Potential XSS detected on {url}: {name}")
                         print(Style.RESET_ALL)
         except requests.exceptions.RequestException as e:
             print(f"Error scanning {url}: {e}")

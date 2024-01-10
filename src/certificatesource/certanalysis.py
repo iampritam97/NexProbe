@@ -5,7 +5,7 @@ import datetime
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Paragraph
 from reportlab.lib.styles import getSampleStyleSheet
-
+from colorama import Fore, Style
 
 def get_certificate_details(host, port=443):
     try:
@@ -20,13 +20,13 @@ def get_certificate_details(host, port=443):
                 not_before = datetime.datetime.strptime(cert['notBefore'], '%b %d %H:%M:%S %Y %Z')
                 not_after = datetime.datetime.strptime(cert['notAfter'], '%b %d %H:%M:%S %Y %Z')
 
-                print(f"\nCertificate Information for {host}:{port}")
+                print(Fore.GREEN + f"\nCertificate Information for {host}:{port}")
                 print(f"Common Name (CN): {common_name}")
                 print(f"Issuer: {issuer['commonName']}")
                 print(f"Valid From: {not_before}")
                 print(f"Valid Until: {not_after}")
                 print(f"Serial Number: {cert['serialNumber']}")
-
+                Style.RESET_ALL
                 output_directory = 'output'
                 output_pdf_file = os.path.join(output_directory, 'SSL_Certificate_Details.pdf')
 
@@ -47,7 +47,7 @@ def get_certificate_details(host, port=443):
 
                 doc.build(story)
 
-                print(f"SSL Report saved to: {output_pdf_file}")
+                print(Fore.RED + f"SSL Report saved to: {output_pdf_file}" + Style.RESET_ALL)
 
     except Exception as e:
         print(f"An error occurred: {e}")

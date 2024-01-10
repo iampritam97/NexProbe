@@ -4,7 +4,7 @@ import requests
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Paragraph
 from reportlab.lib.styles import getSampleStyleSheet
-from colorama import Fore
+from colorama import Fore, Style
 
 def hunter_fetch_emails(domain):
     api_key = "61150cc37813ef999eba7556f301b88e98b12061"
@@ -14,10 +14,10 @@ def hunter_fetch_emails(domain):
     data = response.json() if response.status_code == 200 else {}
 
     emails = [email.get("value") for email in data.get("data", {}).get("emails", [])]
-
+    print(Fore.GREEN + f"Fetched emails for {domain}")
     for email in emails:
-        print(Fore.RED + email)
-
+        print(email)
+    Style.RESET_ALL
     create_pdf(emails)
 def create_pdf(emails):
     output_directory = 'output'
@@ -38,4 +38,4 @@ def create_pdf(emails):
 
     doc.build(story)
 
-    print(f"PDF report with emails saved to: {output_pdf_file}")
+    print(Fore.RED + f"PDF report with emails saved to: {output_pdf_file}" + Style.RESET_ALL)

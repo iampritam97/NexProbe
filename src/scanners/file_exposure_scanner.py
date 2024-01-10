@@ -28,7 +28,7 @@ def file_exposure(target_domain):
                     response2 = requests.get(f"https://{target_domain}{pattern}")
                     if re.search(matcher, response2.text, re.IGNORECASE):
                         exposed_files.append(f"{target_domain}{pattern}: {name}")
-                        print(Fore.RED + f"File exposure detected on {target_domain}{pattern}: {name}")
+                        print(Fore.GREEN + f"File exposure detected on {target_domain}{pattern}: {name}")
                         print(Style.RESET_ALL)
                     pbar.update(1)
 
@@ -56,4 +56,4 @@ def create_pdf(exposed_files, target_domain):
 
     doc.build(story)
 
-    print(f"Report with exposed files saved to: {output_pdf_file}")
+    print(Fore.RED + f"Report with exposed files saved to: {output_pdf_file}" + Style.RESET_ALL)

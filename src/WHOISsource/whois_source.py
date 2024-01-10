@@ -10,7 +10,7 @@ def perform_whois_lookup(domain):
     try:
         whois_info = whois.whois(domain)
 
-        print(Fore.RED + "WHOIS information for:", domain)
+        print(Fore.GREEN + "WHOIS information for:", domain)
         print("Registrar:", whois_info.registrar)
         print("Creation Date:", whois_info.creation_date)
         print("Expiration Date:", whois_info.expiration_date)

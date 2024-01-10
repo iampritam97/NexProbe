@@ -4,7 +4,7 @@ from colorama import Style
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
 from reportlab.lib.styles import getSampleStyleSheet
-
+from colorama import Fore, Style
 
 def get_urls(domain):
     response = requests.get(
@@ -18,10 +18,13 @@ def get_urls(domain):
 
 def fetch_urls(domain):
     urls = get_urls(domain)
-
+    print(Fore.GREEN + f"URLs for {domain}")
+    for i in urls:
+        print(i)
+    Style.RESET_ALL
     create_pdf(urls, "URLs_Report.pdf", domain)
 
-    print(f"URLs and PDF report have been generated.")
+    print(Fore.RED + f"URLs report have been saved to output folder.")
     print(Style.RESET_ALL)
 
 

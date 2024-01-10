@@ -77,7 +77,7 @@ def create_pdf(emails):
 
     doc.build(story)
 
-    print(f"PDF report with emails saved to: {output_pdf_file}")
+    print(Fore.RED + f"PDF report with emails saved to: {output_pdf_file}" + Style.RESET_ALL)
 
 
 def get_emails_crawl(domain):
@@ -85,7 +85,7 @@ def get_emails_crawl(domain):
     crawl_domain(domain)
 
     for email in email_list:
-        print(Fore.RED + email)
+        print(Fore.GREEN + email)
 
     create_pdf(email_list)
 

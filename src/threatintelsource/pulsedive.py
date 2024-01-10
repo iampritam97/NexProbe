@@ -4,6 +4,7 @@ import time
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
 from reportlab.lib.styles import getSampleStyleSheet
+from colorama import Fore, Style
 
 
 def pulsedive_domain_info(api_key, pretty, probe, domain):
@@ -24,7 +25,7 @@ def pulsedive_domain_info(api_key, pretty, probe, domain):
         qid = data.get('qid')
 
         if qid:
-            print(f"Added request to queue. QID: {qid}")
+            print(Fore.GREEN + f"Added request to queue. QID: {qid}" + Style.RESET_ALL)
             return qid
         else:
             print("Failed to retrieve QID.")
@@ -83,7 +84,13 @@ def create_pdf(domain, info_by_qid, output_file, api_key, qid):
                 story.append(Paragraph(f"Indicator: {indicator}", styles['Normal']))
                 story.append(Paragraph(f"Type: {indicator_type}", styles['Normal']))
                 story.append(Paragraph(f"Stamp Probed: {stamp_probed}", styles['Normal']))
+                print(Fore.GREEN + "Pulsedive Information:")
+                print(f"Risk: {risk}")
+                print(f"Indicator: {indicator}")
+                print(f"Type: {indicator_type}")
+                print(f"Stamp Probed: {stamp_probed}" + Style.RESET_ALL)
             else:
+                print(Fore.GREEN + "Risk or Indicator not found in the response." + Style.RESET_ALL)
                 story.append(Paragraph("Risk or Indicator not found in the response.", styles['Normal']))
     else:
         story.append(Paragraph("Failed to retrieve information.", styles['Normal']))
@@ -99,13 +106,13 @@ def pulsedive_main(domain):
     qid = pulsedive_domain_info(api_key, pretty, probe, domain)
 
     if qid:
-        print(f"Waiting for 1 minute...")
+        print(Fore.GREEN + f"Waiting for 1 minute..." + Style.RESET_ALL)
         time.sleep(60)
 
         info_by_qid = get_info_by_qid(api_key, pretty, qid)
 
         create_pdf(domain, info_by_qid, "Pulsedive_Report.pdf", api_key, qid)
 
-        print(f"Pulsedive information and PDF report have been generated.")
+        print(Fore.RED + f"Pulsedive information and PDF report have been saved to output folder." + Style.RESET_ALL)
     else:
         print("Failed to retrieve QID. Exiting.")

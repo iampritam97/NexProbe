@@ -5,7 +5,7 @@ from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Paragraph
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.enums import TA_CENTER
-
+from colorama import Fore,Style
 
 def create_pdf(domain_report, output_file):
     output_dir = os.path.dirname(output_file)
@@ -57,7 +57,7 @@ def virustotal_domain_report(domain):
     domain_report = response.json()
 
     if 'data' in domain_report:
-        print("Domain Report:")
+        print(Fore.GREEN + "Domain Report:")
         print(f"  - Domain: {domain_report['data']['id']}")
         print(f"  - Last Analysis Date: {domain_report['data']['attributes']['last_analysis_date']}")
         print("   -  Analysis Results:")
@@ -69,9 +69,10 @@ def virustotal_domain_report(domain):
         print(f"    Malicious: {domain_report['data']['attributes']['last_analysis_stats']['malicious']}")
         print(f"    Suspicious: {domain_report['data']['attributes']['last_analysis_stats']['suspicious']}")
         print(f"    Undetected: {domain_report['data']['attributes']['last_analysis_stats']['undetected']}")
+        Style.RESET_ALL
     else:
         print(f"Failed to get domain report. Response: {domain_report}")
     output_directory = 'output'
     output_pdf_file = os.path.join(output_directory, 'VirusTotal_Domain_Report_.pdf')
     create_pdf(domain_report, output_pdf_file)
-    print(f"Report saved to: {output_pdf_file}")
+    print(Fore.RED + f"VirusTotal Report saved to: {output_pdf_file}" + Style.RESET_ALL)

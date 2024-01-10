@@ -19,7 +19,7 @@ def scan_headers(target_domain):
         response = requests.get(url, headers=headers)
 
         if response.status_code == 200:
-            print(f"Scanning {url}")
+            print(Fore.GREEN + f"Scanning {url}")
             required_headers = {"strict-transport-security", "content-security-policy", "x-frame-options",
                                 "x-content-type-options", "referrer-policy", "X-XSS-Protection", "Public-Key-Pins",
                                 "Expect-CT"}
@@ -27,10 +27,10 @@ def scan_headers(target_domain):
             missing_headers = required_headers - actual_headers
 
             if missing_headers:
-                print(Fore.RED + f"Missing security headers on {url}: {', '.join(missing_headers)}")
-                print(Style.RESET_ALL)
+                print(f"Missing security headers on {url}: {', '.join(missing_headers)}")
+                Style.RESET_ALL
             else:
-                print(Fore.RED + f"All required security headers present on {url}")
+                print(Fore.GREEN + f"All required security headers present on {url}")
                 print(Style.RESET_ALL)
 
             create_pdf(missing_headers, target_domain)
@@ -63,4 +63,4 @@ def create_pdf(missing_headers, target_domain):
 
     doc.build(story)
 
-    print(f"Report for header analysis saved to: {output_pdf_file}")
+    print(Fore.RED + f"Report for header analysis saved to: {output_pdf_file}" + Style.RESET_ALL)

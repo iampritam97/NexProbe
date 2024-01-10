@@ -27,11 +27,11 @@ def detect_techstack(domain):
 
     if data and "results" in data:
         results = data["results"]
-        print(Fore.RED + f"Technology used for {domain}:")
+        print(Fore.GREEN + f"Technology used for {domain}:")
         for result in results:
             name = result.get("name")
             if name:
-                print(Fore.RED + f" - {name}")
+                print(Fore.GREEN + f" - {name}")
 
         create_pdf(results, domain)
 
@@ -61,4 +61,4 @@ def create_pdf(results, domain):
 
     doc.build(story)
 
-    print(f"PDF report with technology stack saved to: {output_pdf_file}")
+    print(Fore.RED + f"PDF report with technology stack saved to: {output_pdf_file}" + Style.RESET_ALL)
