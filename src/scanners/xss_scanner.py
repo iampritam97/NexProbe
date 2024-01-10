@@ -42,7 +42,7 @@ def xss(target_domain):
                         print(Fore.GREEN + f"Potential XSS detected on {url}: {name}")
                         print(Style.RESET_ALL)
         except requests.exceptions.RequestException as e:
-            print(f"Error scanning {url}: {e}")
+            print(f"Error scanning {url}")
 
     def scan_for_xss(urls, vulnerabilities):
         vulnerable_urls = []
