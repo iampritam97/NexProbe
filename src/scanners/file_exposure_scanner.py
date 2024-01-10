@@ -2,7 +2,6 @@ import os
 import requests
 import re
 import yaml
-from tqdm import tqdm
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Paragraph
 from reportlab.lib.styles import getSampleStyleSheet
@@ -20,17 +19,15 @@ def file_exposure(target_domain):
     try:
         response = requests.get(f"https://{target_domain}")
         if response.status_code == 200:
-            with tqdm(total=len(vulnerabilities), desc=f"Scanning {target_domain}") as pbar:
-                for vuln in vulnerabilities:
-                    name = vuln["name"]
-                    pattern = vuln["pattern"]
-                    matcher = vuln["matcher"]
-                    response2 = requests.get(f"https://{target_domain}{pattern}")
-                    if re.search(matcher, response2.text, re.IGNORECASE):
-                        exposed_files.append(f"{target_domain}{pattern}: {name}")
-                        print(Fore.GREEN + f"File exposure detected on {target_domain}{pattern}: {name}")
-                        print(Style.RESET_ALL)
-                    pbar.update(1)
+            for vuln in vulnerabilities:
+                name = vuln["name"]
+                pattern = vuln["pattern"]
+                matcher = vuln["matcher"]
+                response2 = requests.get(f"https://{target_domain}{pattern}")
+                if re.search(matcher, response2.text, re.IGNORECASE):
+                    exposed_files.append(f"{target_domain}{pattern}: {name}")
+                    print(Fore.GREEN + f"File exposure detected on {target_domain}{pattern}: {name}")
+                    print(Style.RESET_ALL)
 
             create_pdf(exposed_files, target_domain)
     except requests.exceptions.RequestException as e:

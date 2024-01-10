@@ -1,7 +1,6 @@
 import os
 
 import requests
-from tqdm import tqdm
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Paragraph
 from reportlab.lib.styles import getSampleStyleSheet
@@ -34,10 +33,6 @@ def scan_headers(target_domain):
                 print(Style.RESET_ALL)
 
             create_pdf(missing_headers, target_domain)
-
-            with tqdm(total=len(required_headers), desc="Scanning headers") as pbar:
-                for vuln in required_headers:
-                    pbar.update(1)
 
     except requests.exceptions.RequestException as e:
         print(f"Error scanning {target_domain}: {e}")

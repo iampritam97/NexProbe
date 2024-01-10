@@ -3,7 +3,6 @@ import requests
 import re
 import yaml
 from colorama import Fore, Style
-from tqdm import tqdm
 from concurrent.futures import ThreadPoolExecutor
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Paragraph
@@ -47,11 +46,10 @@ def xss(target_domain):
 
     def scan_for_xss(urls, vulnerabilities):
         vulnerable_urls = []
-        with tqdm(total=len(urls), unit="URLs", desc="Scanning URLs") as pbar, ThreadPoolExecutor() as executor:
+        with ThreadPoolExecutor() as executor:
             futures = [executor.submit(scan_url, url, vulnerabilities, vulnerable_urls) for url in urls]
             for future in futures:
                 future.result()
-                pbar.update(1)
 
         return vulnerable_urls
 
