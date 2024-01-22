@@ -18,7 +18,7 @@ sudo pip install -r requirements.txt
 ```
 
 ## Usage/Examples
-
+Complete guide is available on [Installation and Usage](https://github.com/iampritam97/NexProbe/wiki/Installation-and-Usage) section of wiki.  
 ```python
 python recon.py --help
 ```
