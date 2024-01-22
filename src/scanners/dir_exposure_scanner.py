@@ -17,11 +17,11 @@ def dir_exposure(target_domain):
     exposed_dir = []
 
     try:
-        response = requests.get(f"https://{target_domain}")
+        response = requests.get(f"https://{target_domain}", timeout=10)
         if response.status_code == 200:
             wordlist = load_wordlist(wordlist_file_path)
             for directory in wordlist:
-                response2 = requests.get(f"https://{target_domain}/{directory}")
+                response2 = requests.get(f"https://{target_domain}/{directory}", timeout=10)
                 if response2.status_code == 200:
                     exposed_dir.append(f"{target_domain}/{directory}")
                     print(Fore.GREEN + f"Directory exposure detected on {target_domain}/{directory}")
