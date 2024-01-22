@@ -68,8 +68,8 @@ def virustotal_domain_report(domain):
         print(f"    Harmless: {domain_report['data']['attributes']['last_analysis_stats']['harmless']}")
         print(f"    Malicious: {domain_report['data']['attributes']['last_analysis_stats']['malicious']}")
         print(f"    Suspicious: {domain_report['data']['attributes']['last_analysis_stats']['suspicious']}")
-        print(f"    Undetected: {domain_report['data']['attributes']['last_analysis_stats']['undetected']}")
-        Style.RESET_ALL
+        print(f"    Undetected: {domain_report['data']['attributes']['last_analysis_stats']['undetected']}" + Style.RESET_ALL)
+
     else:
         print(f"Failed to get domain report. Response: {domain_report}")
     output_directory = 'output'

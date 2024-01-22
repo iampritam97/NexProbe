@@ -1,6 +1,5 @@
 import os
 import requests
-from colorama import Style
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
 from reportlab.lib.styles import getSampleStyleSheet
@@ -25,7 +24,7 @@ def fetch_urls(domain):
     create_pdf(urls, "URLs_Report.pdf", domain)
 
     print(Fore.RED + f"URLs report have been saved to output folder.")
-    print(Style.RESET_ALL)
+    Style.RESET_ALL
 
 
 def create_pdf(urls, output_file, domain):
