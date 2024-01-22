@@ -13,6 +13,7 @@ from src.scanners.file_exposure_scanner import file_exposure
 from src.scanners.HeaderAnalyse import scan_headers
 from src.scanners.tech_detect import detect_techstack
 from src.scanners.portscanner import portscan_main
+from src.scanners.dir_exposure_scanner import dir_exposure
 from src.threatintelsource.threatintel import query_alienvault_otx
 from src.threatintelsource.URLhaus import query_urlhaus
 from src.threatintelsource.virustotal import virustotal_domain_report
@@ -29,6 +30,7 @@ def active_reconnaissance(domain):
     file_exposure(domain)
     detect_techstack(domain)
     portscan_main(domain)
+    dir_exposure(domain)
     end_time = time.time()
     print(f"Active Reconnaissance took {end_time - start_time:.2f} seconds.")
 

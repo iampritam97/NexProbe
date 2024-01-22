@@ -52,7 +52,3 @@ def create_pdf(exposed_dir, target_domain):
     doc.build(story)
 
     print(Fore.RED + f"Report with exposed directories saved to: {output_pdf_file}" + Style.RESET_ALL)
-
-
-domain_to_check = "vulnerable.fun"
-dir_exposure(domain_to_check)
