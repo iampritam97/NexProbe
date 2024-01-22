@@ -8,7 +8,7 @@ from colorama import Fore, Style
 
 def get_urls(domain):
     response = requests.get(
-        f"https://web.archive.org/cdx/search/cdx?url={domain}/*&output=json&fl=original&collapse=urlkey")
+        f"https://web.archive.org/cdx/search/cdx?url={domain}/*&output=json&fl=original&collapse=urlkey", timeout=10)
     data = response.json()
 
     urls = [entry[0] for entry in data]

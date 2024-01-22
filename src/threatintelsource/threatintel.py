@@ -33,7 +33,7 @@ def query_alienvault_otx(indicator, section="url_list"):
         headers = {"OTX_API_KEY": OTX_API_KEY}
         url = OTX_API_URL.format(indicator=indicator, section=section)
 
-        response = requests.get(url, headers=headers)
+        response = requests.get(url, headers=headers, timeout=10)
 
         if response.status_code == 200:
             data = response.json()

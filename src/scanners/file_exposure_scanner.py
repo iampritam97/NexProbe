@@ -17,13 +17,13 @@ def file_exposure(target_domain):
     exposed_files = []
 
     try:
-        response = requests.get(f"https://{target_domain}")
+        response = requests.get(f"https://{target_domain}", timeout=10)
         if response.status_code == 200:
             for vuln in vulnerabilities:
                 name = vuln["name"]
                 pattern = vuln["pattern"]
                 matcher = vuln["matcher"]
-                response2 = requests.get(f"https://{target_domain}{pattern}")
+                response2 = requests.get(f"https://{target_domain}{pattern}", timeout=10)
                 if re.search(matcher, response2.text, re.IGNORECASE):
                     exposed_files.append(f"{target_domain}{pattern}: {name}")
                     print(Fore.GREEN + f"File exposure detected on {target_domain}{pattern}: {name}")

@@ -52,7 +52,7 @@ def virustotal_domain_report(domain):
 
     headers = {'x-apikey': api_key}
 
-    response = requests.get(domain_report_endpoint, headers=headers)
+    response = requests.get(domain_report_endpoint, headers=headers, timeout=10)
 
     domain_report = response.json()
 

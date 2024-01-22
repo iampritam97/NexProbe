@@ -18,7 +18,7 @@ def pulsedive_domain_info(api_key, pretty, probe, domain):
     }
 
     try:
-        response = requests.get(f"{base_url}?{endpoint}", params=params)
+        response = requests.get(f"{base_url}?{endpoint}", params=params, timeout=10)
         response.raise_for_status()
 
         data = response.json()
@@ -46,7 +46,7 @@ def get_info_by_qid(api_key, pretty, qid):
 
     try:
         time.sleep(60)
-        response = requests.get(base_url, params=params)
+        response = requests.get(base_url, params=params, timeout=10)
         response.raise_for_status()
 
         data = response.json()

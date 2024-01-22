@@ -7,7 +7,7 @@ from colorama import Fore,Style
 
 def query_urlhaus(url):
     data = {'host': url}
-    response = requests.post('https://urlhaus-api.abuse.ch/v1/host/', data)
+    response = requests.post('https://urlhaus-api.abuse.ch/v1/host/', data, timeout=10)
 
     json_response = response.json()
     output_directory = 'output'

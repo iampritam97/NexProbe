@@ -12,7 +12,7 @@ from reportlab.lib.styles import getSampleStyleSheet
 def xss(target_domain):
     def get_urls(domain):
         response = requests.get(
-            f"https://web.archive.org/cdx/search/cdx?url={domain}/*&output=json&fl=original&collapse=urlkey")
+            f"https://web.archive.org/cdx/search/cdx?url={domain}/*&output=json&fl=original&collapse=urlkey", timeout=10)
         data = response.json()
         urls = [entry[0] if entry[0].startswith('http') else 'https://' + entry[0] for entry in
                 data]
@@ -20,7 +20,7 @@ def xss(target_domain):
 
     def scan_url(url, vulnerabilities, results):
         try:
-            response = requests.get(url)
+            response = requests.get(url, timeout=10)
             if response.status_code == 200:
                 for vuln in vulnerabilities:
                     name = vuln["name"]
@@ -35,7 +35,7 @@ def xss(target_domain):
 
                     new_url = url.replace('=', '=' + payload)
                     # print(new_url)
-                    response2 = requests.get(new_url + pattern)
+                    response2 = requests.get(new_url + pattern, timeout=10)
                     if re.search(matcher, response2.text, re.IGNORECASE):
                         # if re.search(payload, response2.text, re.IGNORECASE):
                         results.append(url)
