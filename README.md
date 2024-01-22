@@ -26,11 +26,11 @@ python recon.py --help
 - [ ] SQLi scanner
 - [ ] Internal dashboards and panels scanner
 - [ ] Sensitive tokens and API keys scanner
-- [ ] Response Header Analysis
+- [x] Response Header Analysis
 - [ ] Data breach detection from external source
 - [ ] Path traversal scanner
 - [x] Add update flag
-- [ ] Directory Fuzzing
+- [x] Directory Fuzzing
 - [ ] Port scanner
 
 ## Disclaimer
