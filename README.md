@@ -6,6 +6,25 @@ NexProbe is a Python script designed for conducting comprehensive cyber security
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/b6ccb708ea0d4d3eb9978185b0dfd9f9)](https://app.codacy.com/gh/iampritam97/NexProbe/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 ![GitHub](https://img.shields.io/github/license/iampritam97/NexProbe)
 
+## How it works ?
+NexProbe employs a modular structure, with each module dedicated to a specific aspect of reconnaissance:
+
+`WHOISsource`: Retrieves WHOIS information, such as domain registration details and ownership data.
+
+`certificatesource`: Analyzes SSL/TLS certificates, revealing certificate validity, issuer information.
+
+`emailsource`: Gathers email addresses associated with the domain, utilizing both API-based and scraping techniques.
+
+`scanners`: Conducts scans for XSS, missing response headers, exposed directories.
+
+`subdomainsource`: Discovers subdomains using the crt.sh API.
+
+`threatintelsource`: Gathers threat intelligence data from multiple sources like VirusTotal, URLhaus, Pulsedive, and AlienVault OTX to detect known threats or malicious activities.
+
+`urlsource`: Retrieves historical URLs using the Wayback Machine.
+
+![NexProbe](https://test.tthreat.com/NexProbe.png)
+
 ## Installation
 ```
 git clone https://github.com/iampritam97/NexProbe.git
