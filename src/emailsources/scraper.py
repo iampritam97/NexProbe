@@ -1,33 +1,38 @@
 import os
-
-import requests
 from bs4 import BeautifulSoup
 import re
-from urllib.parse import urljoin
 import threading
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Paragraph
 from reportlab.lib.styles import getSampleStyleSheet
 from colorama import Fore, Style
+import requests
+from urllib.parse import urljoin
+
 
 email_list_lock = threading.Lock()
 email_list = []
 
 
+def extract_emails_from_text(text):
+    return re.findall(r'[\w\.-]+@[\w\.-]+', text, re.IGNORECASE)
+
+
 def crawl_url(url):
     try:
-        response = requests.get(url)
-        response.raise_for_status()
+        if not url.startswith('mailto:'):
+            response = requests.get(url)
+            response.raise_for_status()
 
-        soup = BeautifulSoup(response.text, 'html.parser')
+            soup = BeautifulSoup(response.text, 'html.parser')
 
-        emails = re.findall(r'[\w\.-]+@[\w\.-]+', soup.text)
+            emails = extract_emails_from_text(soup.text)
 
-        with email_list_lock:
-            email_list.extend(emails)
+            with email_list_lock:
+                email_list.extend(emails)
 
     except requests.exceptions.RequestException as e:
-        print(f"Error while crawling link: {url}, {e}")
+        print(Fore.RED + f"Error while crawling link: {url}, {e}" + Style.RESET_ALL)
 
 
 def crawl_domain(domain):
@@ -55,7 +60,7 @@ def crawl_domain(domain):
             thread.join()
 
     except requests.exceptions.RequestException as e:
-        print(f"Error while crawling domain: {domain}, {e}")
+        print(Fore.RED + f"Error while crawling domain: {domain}, {e}" + Style.RESET_ALL)
 
 
 def create_pdf(emails):
@@ -77,7 +82,7 @@ def create_pdf(emails):
 
     doc.build(story)
 
-    print(Fore.RED + f"PDF report with emails saved to: {output_pdf_file}" + Style.RESET_ALL)
+    print(Fore.GREEN + f"PDF report with emails saved to: {output_pdf_file}" + Style.RESET_ALL)
 
 
 def get_emails_crawl(domain):
